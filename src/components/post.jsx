@@ -1,19 +1,24 @@
 import PropTypes from 'prop-types';
-import { useFetch, getAllPublicPosts } from '../api/posts';
+import { DateTime } from 'luxon';
 
-function PostCard({ post, error, loading }) {
+function PostCard({ post }) {
+  const timestamp = DateTime.fromISO(post.timestamp).toLocaleString(
+    DateTime.DATETIME_MED,
+  );
   return (
-    <div className="p-4 shadow-md bg-violet-200 text-zinc-950">Loading...</div>
+    <div className="p-4 rounded-md bg-violet-200 text-zinc-950 hover:bg-violet-300 transition-color duration-300">
+      <h2 className="font-medium">{post.title}</h2>
+      <p>{timestamp}</p>
+    </div>
   );
 }
 
 PostCard.propTypes = {
-  post: PropTypes.object({
-    title: PropTypes.string.isRequired,
-    body: PropTypes.string.isRequired,
+  post: PropTypes.shape({
+    title: PropTypes.string,
+    body: PropTypes.string,
+    timestamp: PropTypes.string,
   }),
-  error: PropTypes.instanceOf(Error),
-  loading: PropTypes.bool,
 };
 
 export default PostCard;

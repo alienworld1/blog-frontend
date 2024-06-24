@@ -8,7 +8,7 @@ function App() {
   return (
     <div className="flex flex-col h-screen bg-[#191927] cursor-default">
       <Header />
-      <main className="p-6">
+      <main className="p-8">
         <RouterProvider router={router} />
       </main>
     </div>
