@@ -16,7 +16,7 @@ function PostPage() {
 
   return (
     <>
-      <article className="rounded-sm bg-violet-300 p-4 mx-auto">
+      <article className="rounded-sm bg-violet-300 p-4 mx-auto container">
         {loading ? (
           <TailSpin stroke="#5b21b6" />
         ) : error ? (

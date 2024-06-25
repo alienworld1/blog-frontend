@@ -7,7 +7,7 @@ function Comment({ id }) {
   const { response, loading, error } = useFetch(getCommentById, id);
 
   return (
-    <div className="rounded-sm bg-violet-300 p-4">
+    <div className="rounded-sm bg-violet-300 container p-4">
       {loading ? (
         <Bars stroke="#5b21b6" fill="#5b21b6" />
       ) : error ? (

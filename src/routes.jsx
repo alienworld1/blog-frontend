@@ -2,7 +2,7 @@ import Pages from './pages';
 
 const routes = [
   {
-    path: '/',
+    index: true,
     element: <Pages.PostList />,
     errorElement: <Pages.Error />,
   },
@@ -13,6 +13,10 @@ const routes = [
   {
     path: '/posts/:id',
     element: <Pages.PostPage />,
+  },
+  {
+    path: '/log-in',
+    element: <Pages.LoginForm />,
   },
 ];
 
