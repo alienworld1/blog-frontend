@@ -7,6 +7,13 @@ async function getAllPublicPosts() {
   return posts;
 }
 
+async function getPostById(id) {
+  const response = await fetch(`/api/posts/${id}`);
+  const post = await response.json();
+
+  return post;
+}
+
 const useFetch = (callback, argument) => {
   const [response, setResponse] = useState();
   const [error, setError] = useState(null);
@@ -29,4 +36,4 @@ const useFetch = (callback, argument) => {
   return { response, error, loading };
 };
 
-export { getAllPublicPosts, useFetch };
+export { getAllPublicPosts, getPostById, useFetch };
