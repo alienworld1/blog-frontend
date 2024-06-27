@@ -1,8 +1,12 @@
 import { Link } from 'react-router-dom';
 import Dropdown from './dropdown';
 import Socials from './socials';
+import UserContext from '../UserContext';
+import { useContext } from 'react';
 
 function Header() {
+  const { user, isAuthenticated } = useContext(UserContext);
+
   return (
     <header className="flex justify-around p-3 text-slate-50 items-center border-b-2 border-violet-400">
       <Link to="/">
@@ -14,8 +18,24 @@ function Header() {
             <Socials />
           </Dropdown>
         </li>
-        <li className="hover:text-violet-300 cursor-pointer">Log In</li>
-        <li className="hover:text-violet-300 cursor-pointer">Sign Up</li>
+        {isAuthenticated ? (
+          <>
+            <li>Welcome, {user.username}!</li>
+            <Link
+              to="/log-out"
+              className="hover:text-violet-300 cursor-pointer"
+            >
+              <li>Log Out</li>
+            </Link>
+          </>
+        ) : (
+          <>
+            <Link to="/log-in">
+              <li className="hover:text-violet-300 cursor-pointer">Log In</li>
+            </Link>
+            <li className="hover:text-violet-300 cursor-pointer">Sign Up</li>
+          </>
+        )}
       </ul>
     </header>
   );

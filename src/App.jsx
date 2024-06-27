@@ -1,6 +1,8 @@
 import Header from './components/header';
 import routes from './routes';
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
+import { useState } from 'react';
+import UserContext from './UserContext';
 
 const router = createBrowserRouter([
   {
@@ -11,12 +13,31 @@ const router = createBrowserRouter([
 ]);
 
 function Layout() {
+  const [user, setUser] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const loginUser = user => {
+    setUser(() => user);
+    setIsAuthenticated(true);
+  };
+
+  const logoutUser = () => {
+    if (isAuthenticated) {
+      setUser(null);
+      setIsAuthenticated(false);
+    }
+  };
+
   return (
     <>
-      <Header />
-      <main className="w-8/12 mx-auto my-8">
-        <Outlet />
-      </main>
+      <UserContext.Provider
+        value={{ user, isAuthenticated, loginUser, logoutUser }}
+      >
+        <Header />
+        <main className="w-8/12 mx-auto my-8">
+          <Outlet />
+        </main>
+      </UserContext.Provider>
     </>
   );
 }
