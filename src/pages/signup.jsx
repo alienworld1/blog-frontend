@@ -1,44 +1,46 @@
-import { useState, useContext } from 'react';
-import UserContext from '../UserContext';
-import { Navigate } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, Navigate } from 'react-router-dom';
 
-function LoginForm() {
+function SignUpForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState(null);
-  const [hasLoggedIn, setHasLoggedIn] = useState(false);
-  const { loginUser } = useContext(UserContext);
+  const [hasSignedUp, setHasSignedUp] = useState(false);
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const response = await fetch('/api/auth/log-in', {
+
+    if (password != confirmPassword) {
+      setError('The password and confirmation must match.');
+      return;
+    }
+
+    const response = await fetch('/api/users', {
       method: 'POST',
+      body: JSON.stringify({ username, password, isAuthor: false }),
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        username,
-        password,
-      }),
     });
-    const authData = await response.json();
+
+    const responseData = await response.json();
 
     if (!response.ok) {
-      setError(authData.message);
+      setError(responseData.message || responseData[0].msg);
       return;
     } else {
       setError(null);
     }
 
-    loginUser(authData.user);
-    setHasLoggedIn(true);
+    setHasSignedUp(true);
   };
 
   return (
     <>
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 className="mt-6 text-center text-3xl font-semibold text-white">
-          Log in to your account
+          Create your account
         </h2>
       </div>
 
@@ -78,10 +80,31 @@ function LoginForm() {
                   id="password"
                   name="password"
                   type="password"
-                  autoComplete="current-password"
+                  autoComplete="new-password"
                   required
                   value={password}
                   onChange={e => setPassword(e.target.value)}
+                  className="appearance-none block w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-purple-500 focus:border-purple-500 bg-gray-700 text-white sm:text-sm"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label
+                htmlFor="confirm-password"
+                className="block text-sm font-medium text-gray-300"
+              >
+                Confirm Password
+              </label>
+              <div className="mt-1">
+                <input
+                  id="confirm-password"
+                  name="confirm-password"
+                  type="password"
+                  autoComplete="new-password"
+                  required
+                  value={confirmPassword}
+                  onChange={e => setConfirmPassword(e.target.value)}
                   className="appearance-none block w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-purple-500 focus:border-purple-500 bg-gray-700 text-white sm:text-sm"
                 />
               </div>
@@ -92,20 +115,42 @@ function LoginForm() {
                 type="submit"
                 className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
               >
-                Sign in
+                Sign up
               </button>
             </div>
           </form>
+
+          <div className="mt-6">
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-600"></div>
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-2 bg-gray-800 text-gray-400">
+                  Already have an account?
+                </span>
+              </div>
+            </div>
+
+            <div className="mt-6 text-center">
+              <Link
+                to="/log-in"
+                className="font-medium text-purple-400 hover:text-purple-300"
+              >
+                Log in instead
+              </Link>
+            </div>
+          </div>
         </div>
         {error && (
           <div className="bg-red-400 my-5 shadow sm:rounded-lg py-2 px-4 font-medium">
             {error}
           </div>
         )}
-        {hasLoggedIn && <Navigate to="/" replace={true} />}
       </div>
+      {hasSignedUp && <Navigate to="/log-in" />}
     </>
   );
 }
 
-export default LoginForm;
+export default SignUpForm;

@@ -33,7 +33,9 @@ function Header() {
             <Link to="/log-in">
               <li className="hover:text-violet-300 cursor-pointer">Log In</li>
             </Link>
-            <li className="hover:text-violet-300 cursor-pointer">Sign Up</li>
+            <Link to="/sign-up">
+              <li className="hover:text-violet-300 cursor-pointer">Sign Up</li>
+            </Link>
           </>
         )}
       </ul>

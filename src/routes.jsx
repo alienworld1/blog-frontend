@@ -18,6 +18,10 @@ const routes = [
     path: '/log-in',
     element: <Pages.LoginForm />,
   },
+  {
+    path: '/sign-up',
+    element: <Pages.SignUpForm />,
+  },
 ];
 
 export default routes;
