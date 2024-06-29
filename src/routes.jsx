@@ -22,6 +22,14 @@ const routes = [
     path: '/sign-up',
     element: <Pages.SignUpForm />,
   },
+  {
+    path: '/log-out',
+    element: (
+      <Pages.Logout
+        logoutFunction={async () => await fetch('/api/auth/log-out')}
+      />
+    ),
+  },
 ];
 
 export default routes;
