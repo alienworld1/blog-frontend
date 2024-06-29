@@ -17,7 +17,7 @@ function Comment({ id }) {
         </div>
       ) : (
         <>
-          <p>{response.body}</p>
+          <p>{response.body.replaceAll('&#x27;', "'")}</p>
           <h2 className="italic text-gray-800">
             Posted by {response.author.username}
           </h2>

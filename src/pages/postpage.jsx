@@ -2,8 +2,10 @@ import { useParams, Navigate } from 'react-router-dom';
 import { useFetch, getPostById } from '../api/posts';
 import { TailSpin } from 'react-loading-icons';
 import { MdError } from 'react-icons/md';
-import Comment from '../components/comment';
 import { Link } from 'react-router-dom';
+
+import Comment from '../components/comment';
+import CommentForm from '../components/commentForm';
 
 function PostPage() {
   const { id } = useParams();
@@ -27,7 +29,7 @@ function PostPage() {
         ) : (
           <>
             <h1 className="font-semibold text-3xl mb-3">{response.title}</h1>
-            <p>{response.body}</p>
+            <p>{response.body.replaceAll('&#x27;', "'")}</p>
           </>
         )}
         <Link to="/" className="text-violet-900 hover:underline">
@@ -39,6 +41,7 @@ function PostPage() {
       {response?.comments.map(comment => (
         <Comment key={comment} id={comment} />
       ))}
+      <CommentForm postId={id} />
     </>
   );
 }
