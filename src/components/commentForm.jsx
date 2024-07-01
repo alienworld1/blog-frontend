@@ -28,7 +28,6 @@ function CommentForm({ postId }) {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    console.log('submitting');
 
     const response = await fetch(`/api/posts/${postId}/comments`, {
       method: 'POST',
@@ -40,7 +39,6 @@ function CommentForm({ postId }) {
 
     const responseData = await response.json();
 
-    console.log(responseData);
   };
 
   return (
