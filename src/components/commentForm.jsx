@@ -9,7 +9,7 @@ function CommentForm({ postId }) {
 
   if (!isAuthenticated) {
     return (
-      <div className="flex w-full justify-center text-lg p-4 border-violet-300 border-2 rounded container">
+      <div className="flex w-full justify-center text-lg p-4 border-violet-300 border-2 rounded container my-4">
         <p className="text-slate-50">
           You need to{' '}
           <Link to="/log-in" className="text-violet-300 hover:text-violet-500">
