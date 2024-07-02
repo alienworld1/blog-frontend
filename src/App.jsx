@@ -44,7 +44,7 @@ function Layout() {
 
 function App() {
   return (
-    <div className="flex flex-col h-screen bg-[#191927] cursor-default">
+    <div className="flex flex-col min-h-screen bg-[#191927] cursor-default">
       <RouterProvider router={router} />
     </div>
   );
